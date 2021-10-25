@@ -1,0 +1,24 @@
+Nombre:
+Sistema de monitoreo para la detección de actividad sísmica y prevención de accidentes dentro de casas habitación.
+
+Participantes:
+Dr. Genaro Hernández Valdez 
+M. en C. Mario Alberto Ramírez Reyna (Representante)
+Ing. Víctor Hugo Caro Martínez
+
+Resumen:
+En este documento se presenta la propuesta de un proyecto tecnológico para el monitoreo de  la salud estructural y prevención de daños colaterales de casas habitación que experimenten movimientos y vibraciones debidos a actividades sísmicas. El sistema de monitoreo está compuesto por una red inalámbrica de nodos que recolectan información relacionada a la actividad sísmica y la transmiten a un centro de control (servidor) con la finalidad de detectar movimientos y vibraciones de la casa habitación, reportar posibles daños estructurales y prevenir accidentes colaterales dentro de hogares debidos a movimientos telúricos. Los nodos de la red inalámbrica se componen de sensores, actuadores y cámaras de video que permiten detectar movimientos y vibraciones, posibles daños estructurales, fugas de gas y aumento de temperatura de la casa habitación. Dependiendo del grado de las vibraciones y movimiento de la estructura monitoreada, el centro de control puede ordenar a los nodos que activen a los actuadores para cerrar válvulas de gas y agua con la finalidad de prevenir accidentes colaterales dentro de la casa habitación. El desarrollo de este proyecto tiene como finalidad mejorar la seguridad en viviendas que se encuentren en zonas sísmicas de riesgo medio o alto; de esta manera, se contribuye en el Objetivo Mundial 11 de las Naciones Unidas (Ciudades y Comunidades Sostenibles) 
+
+Objetivo General:
+Diseñar e implementar una red inalámbrica de sensores para la detección de actividad sísmica que permita el apoyo en la prevención de accidentes dentro de los hogares ubicados en zonas sísmicas, a través de la detección de movimientos y vibraciones anómalos y que permita el corte de los suministros de agua y gas.
+
+Objetivos Particulares:
+
+1.	Construir un bloque de adquisición de información para medir la salida de un acelerómetro y sensor de vibración para la detección de actividad sísmica.
+2.	Construir un bloque de adquisición de información para medir la salida de un sensor de luminosidad y de temperatura para la detección de incendios.
+3.	Construir un bloque de adquisición de imagen utilizando una cámara integrada a una tarjeta de desarrollo para determinar el estado de paredes y soportes.
+4.	Diseñar e implementar un bloque de conexión inalámbrica local para la comunicación de los nodos de la red con un centro de control.
+5.	Construir un bloque de activación para los actuadores que permitan controlar el suministro de agua y gas.
+6.	Construir un bloque para la transmisión de información por intercambio de mensajes entre los diferentes nodos con un servidor central.
+7.	Diseñar e implementar un servidor donde se concentre la información adquirida por los nodos de la red.
+8.	Diseñar e implementar una interfaz gráfica donde se presente de manera clara la información generada por los sensores.
