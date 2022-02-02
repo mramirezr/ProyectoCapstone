@@ -1,0 +1,9 @@
+Los nodos N1 y N2 son un sistema que permita la captura de la vibración, aceleración, velocidad, rotación e inclinación de las paredes sobre las cuales se coloquen. Inicialmente el sistema cuenta con una velocidad de muestreo de 60 segundos. Al detectar una vibración a través del SW-420 este disparará un proceso de interrupción que modificará la velocidad de muestreo a 6 segundos entre muestras, de esta manera al detectar un evento sísmico se tendrá una mejor resolución de la información a capturar.
+Por otro lado, utilizando el módulo GY-521 utilizando el giroscopio y acelerómetro se obtiene la información de la aceleración y velocidad experimentada por la pared o trabe, además de también capturar la información de inclinación y rotación en caso de que hayan sucedido.
+Toda la información capturada se envía de manera periódica (de acuerdo con la velocidad de muestreo) hacía el Nodo de Control (Servidor) utilizando el protocolo de comunicación MQTT, donde será procesada y se tomarán las decisiones pertinentes acerca de que si se deben cerrar o no las llaves de paso.
+
+Material:
+•	1 SW-420
+•	1 GY-521
+•	1 conector de Carga USB
+•	1 ESP32-CAM
