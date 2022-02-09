@@ -1,1 +1,1095 @@
-[{"id":"867fb348.0b131","type":"tab","label":"Proyecto Capstone","disabled":false,"info":""},{"id":"f7471286.7b276","type":"mqtt in","z":"867fb348.0b131","name":"","topic":"capstone/nodo_mpu6050","qos":"2","datatype":"auto","broker":"eca8609b.847308","nl":false,"rap":true,"rh":0,"x":190,"y":100,"wires":[["75691e2.5e5d86"]]},{"id":"75691e2.5e5d86","type":"json","z":"867fb348.0b131","name":"","property":"payload","action":"obj","pretty":false,"x":370,"y":100,"wires":[["e84313a3.b650e","5c4fa3a5.2160cc","a56a8def.c30b58","4698168e.7e2a5","2e22545b.e390e4","caede563.a9f1d","4cf7b5d8.681154","39bd94a1.dbd10c","537d2d45.b73764","a3e0e41b.4e7988","cceab31.c36c35","a956084b.412048","3699fe95.bd9ff2","48672e45.efc84","50dde507.135d2c"]]},{"id":"e84313a3.b650e","type":"function","z":"867fb348.0b131","name":"aceleracion_x","func":"msg.payload = msg.payload.ax;\nreturn msg;","outputs":1,"noerr":0,"initialize":"","finalize":"","libs":[],"x":680,"y":100,"wires":[["4175a36f.a55c44"]]},{"id":"5c4fa3a5.2160cc","type":"function","z":"867fb348.0b131","name":"aceleracion_z","func":"msg.payload = msg.payload.az;\nreturn msg;","outputs":1,"noerr":0,"initialize":"","finalize":"","libs":[],"x":680,"y":180,"wires":[["d66f77e8.cd445"]]},{"id":"a56a8def.c30b58","type":"function","z":"867fb348.0b131","name":"aceleracion_y","func":"msg.payload = msg.payload.ay;\nreturn msg;","outputs":1,"noerr":0,"initialize":"","finalize":"","libs":[],"x":680,"y":140,"wires":[["8e46cfae.ac0e48"]]},{"id":"2fc80ef7.9c1c22","type":"mqtt out","z":"867fb348.0b131","name":"","topic":"capstone/actuador_gas","qos":"2","retain":"","respTopic":"","contentType":"","userProps":"","correl":"","expiry":"","broker":"eca8609b.847308","x":1330,"y":580,"wires":[]},{"id":"4175a36f.a55c44","type":"ui_text_input","z":"867fb348.0b131","name":"","label":"Aceleración en x: ","tooltip":"","group":"26b2b983.ab974e","order":0,"width":0,"height":0,"passthru":true,"mode":"text","delay":300,"topic":"topic","sendOnBlur":true,"topicType":"msg","x":950,"y":100,"wires":[[]]},{"id":"8e46cfae.ac0e48","type":"ui_text_input","z":"867fb348.0b131","name":"","label":"Aceleración en y: ","tooltip":"","group":"26b2b983.ab974e","order":0,"width":0,"height":0,"passthru":true,"mode":"text","delay":300,"topic":"topic","sendOnBlur":true,"topicType":"msg","x":950,"y":140,"wires":[[]]},{"id":"d66f77e8.cd445","type":"ui_text_input","z":"867fb348.0b131","name":"","label":"Aceleración en z: ","tooltip":"","group":"26b2b983.ab974e","order":0,"width":0,"height":0,"passthru":true,"mode":"text","delay":300,"topic":"topic","sendOnBlur":true,"topicType":"msg","x":950,"y":180,"wires":[[]]},{"id":"4698168e.7e2a5","type":"function","z":"867fb348.0b131","name":"velocidad_x","func":"msg.payload = msg.payload.gx;\nreturn msg;","outputs":1,"noerr":0,"initialize":"","finalize":"","libs":[],"x":670,"y":240,"wires":[["947da25c.566e3"]]},{"id":"caede563.a9f1d","type":"function","z":"867fb348.0b131","name":"velocidad_z","func":"msg.payload = msg.payload.gz;\nreturn msg;","outputs":1,"noerr":0,"initialize":"","finalize":"","libs":[],"x":670,"y":320,"wires":[["eb163d21.e50bc"]]},{"id":"2e22545b.e390e4","type":"function","z":"867fb348.0b131","name":"velocidad_y","func":"msg.payload = msg.payload.gy;\nreturn msg;","outputs":1,"noerr":0,"initialize":"","finalize":"","libs":[],"x":670,"y":280,"wires":[["34cd31cd.6dbf96"]]},{"id":"947da25c.566e3","type":"ui_text_input","z":"867fb348.0b131","name":"","label":"Velocidad angular x: ","tooltip":"","group":"e65fd366.925cb8","order":0,"width":0,"height":0,"passthru":true,"mode":"text","delay":300,"topic":"topic","sendOnBlur":true,"topicType":"msg","x":960,"y":240,"wires":[[]]},{"id":"34cd31cd.6dbf96","type":"ui_text_input","z":"867fb348.0b131","name":"","label":"Velocidad angular y: ","tooltip":"","group":"e65fd366.925cb8","order":0,"width":0,"height":0,"passthru":true,"mode":"text","delay":300,"topic":"topic","sendOnBlur":true,"topicType":"msg","x":960,"y":280,"wires":[[]]},{"id":"eb163d21.e50bc","type":"ui_text_input","z":"867fb348.0b131","name":"","label":"Velocidad angular en z: ","tooltip":"","group":"e65fd366.925cb8","order":0,"width":0,"height":0,"passthru":true,"mode":"text","delay":300,"topic":"topic","sendOnBlur":true,"topicType":"msg","x":970,"y":320,"wires":[[]]},{"id":"4cf7b5d8.681154","type":"function","z":"867fb348.0b131","name":"vibracion","func":"msg.payload = msg.payload.vibra;\nreturn msg;","outputs":1,"noerr":0,"initialize":"","finalize":"","libs":[],"x":700,"y":720,"wires":[["e8e690f1.a1a31"]]},{"id":"c2abb8f6.3acf2","type":"mysql","z":"867fb348.0b131","mydb":"f8656455.7e0d2","name":"DB","x":710,"y":840,"wires":[[]]},{"id":"39bd94a1.dbd10c","type":"function","z":"867fb348.0b131","name":"insertar_aceleracion","func":"var tzoffset = (new Date()).getTimezoneOffset()*60000;\nfechahora= (new Date (Date.now() - tzoffset)).toISOString().slice(0,-1);\nmsg.topic = \"insert into aceleracion values ('\"+fechahora+\"',\"+msg.payload.ax+\",\"+msg.payload.ay+\",\"+msg.payload.az+\")\";\nreturn msg;","outputs":1,"noerr":0,"initialize":"","finalize":"","libs":[],"x":480,"y":740,"wires":[["c2abb8f6.3acf2"]]},{"id":"537d2d45.b73764","type":"function","z":"867fb348.0b131","name":"rotacion_x","func":"msg.payload = msg.payload.rx;\nreturn msg;","outputs":1,"noerr":0,"initialize":"","finalize":"","libs":[],"x":670,"y":380,"wires":[["b9e527cc.0f0078"]]},{"id":"b9e527cc.0f0078","type":"ui_text_input","z":"867fb348.0b131","name":"","label":"Rotación en x: ","tooltip":"","group":"556cdb95.7b9ba4","order":0,"width":0,"height":0,"passthru":true,"mode":"text","delay":300,"topic":"topic","sendOnBlur":true,"topicType":"msg","x":940,"y":380,"wires":[[]]},{"id":"a3e0e41b.4e7988","type":"function","z":"867fb348.0b131","name":"rotacion_y","func":"msg.payload = msg.payload.ry;\nreturn msg;","outputs":1,"noerr":0,"initialize":"","finalize":"","libs":[],"x":670,"y":420,"wires":[["a93b0fae.62e5d"]]},{"id":"a93b0fae.62e5d","type":"ui_text_input","z":"867fb348.0b131","name":"","label":"Rotación en y: ","tooltip":"","group":"556cdb95.7b9ba4","order":0,"width":0,"height":0,"passthru":true,"mode":"text","delay":300,"topic":"topic","sendOnBlur":true,"topicType":"msg","x":940,"y":420,"wires":[[]]},{"id":"cceab31.c36c35","type":"function","z":"867fb348.0b131","name":"inclinacion_x","func":"msg.payload = msg.payload.ix;\nreturn msg;","outputs":1,"noerr":0,"initialize":"","finalize":"","libs":[],"x":670,"y":480,"wires":[["80edde61.981d3"]]},{"id":"80edde61.981d3","type":"ui_text_input","z":"867fb348.0b131","name":"","label":"Inclinación en x: ","tooltip":"","group":"d0ae1a0e.fec798","order":0,"width":0,"height":0,"passthru":true,"mode":"text","delay":300,"topic":"topic","sendOnBlur":true,"topicType":"msg","x":940,"y":480,"wires":[[]]},{"id":"a956084b.412048","type":"function","z":"867fb348.0b131","name":"inclinacion_y","func":"msg.payload = msg.payload.iy;\nreturn msg;","outputs":1,"noerr":0,"initialize":"","finalize":"","libs":[],"x":670,"y":520,"wires":[["19014a62.5c1026"]]},{"id":"19014a62.5c1026","type":"ui_text_input","z":"867fb348.0b131","name":"","label":"Inclinación en y: ","tooltip":"","group":"d0ae1a0e.fec798","order":0,"width":0,"height":0,"passthru":true,"mode":"text","delay":300,"topic":"topic","sendOnBlur":true,"topicType":"msg","x":940,"y":520,"wires":[[]]},{"id":"3699fe95.bd9ff2","type":"function","z":"867fb348.0b131","name":"insertar_velocidad","func":"var tzoffset = (new Date()).getTimezoneOffset()*60000;\nfechahora= (new Date (Date.now() - tzoffset)).toISOString().slice(0,-1);\nmsg.topic = \"insert into velocidad values ('\"+fechahora+\"',\"+msg.payload.gx+\",\"+msg.payload.gy+\",\"+msg.payload.gz+\")\";\nreturn msg;","outputs":1,"noerr":0,"initialize":"","finalize":"","libs":[],"x":470,"y":780,"wires":[["c2abb8f6.3acf2"]]},{"id":"48672e45.efc84","type":"function","z":"867fb348.0b131","name":"insertar_rotacion","func":"var tzoffset = (new Date()).getTimezoneOffset()*60000;\nfechahora= (new Date (Date.now() - tzoffset)).toISOString().slice(0,-1);\nmsg.topic = \"insert into rotacion values ('\"+fechahora+\"',\"+msg.payload.rx+\",\"+msg.payload.ry+\")\";\nreturn msg;","outputs":1,"noerr":0,"initialize":"","finalize":"","libs":[],"x":470,"y":820,"wires":[["c2abb8f6.3acf2"]]},{"id":"50dde507.135d2c","type":"function","z":"867fb348.0b131","name":"insertar_inclinacion","func":"var tzoffset = (new Date()).getTimezoneOffset()*60000;\nfechahora= (new Date (Date.now() - tzoffset)).toISOString().slice(0,-1);\nmsg.topic = \"insert into inclinacion values ('\"+fechahora+\"',\"+msg.payload.ix+\",\"+msg.payload.iy+\")\";\nreturn msg;","outputs":1,"noerr":0,"initialize":"","finalize":"","libs":[],"x":470,"y":860,"wires":[["c2abb8f6.3acf2"]]},{"id":"a38db945.622748","type":"mqtt in","z":"867fb348.0b131","name":"","topic":"capstone/gas_temperatura_humedad_gas","qos":"2","datatype":"auto","broker":"aba49caa.e7008","nl":false,"rap":true,"rh":0,"x":240,"y":160,"wires":[["1f5e2125.03338f"]]},{"id":"1f5e2125.03338f","type":"json","z":"867fb348.0b131","name":"","property":"payload","action":"obj","pretty":false,"x":350,"y":240,"wires":[["db000374.d4ef8","8fa4905f.08c3a","4f7dc5ee.c5f76c","566287c3.a5ceb8","527a098d.cccdd8"]]},{"id":"db000374.d4ef8","type":"function","z":"867fb348.0b131","name":"HUMEDAD","func":"msg.payload = msg.payload.HUMEDAD;\nreturn msg;","outputs":1,"noerr":0,"initialize":"","finalize":"","libs":[],"x":670,"y":560,"wires":[["99d76703.656638"]]},{"id":"8fa4905f.08c3a","type":"function","z":"867fb348.0b131","name":"TEMPERATURA","func":"msg.payload = msg.payload.TEMPERATURA;\nreturn msg;","outputs":1,"noerr":0,"initialize":"","finalize":"","libs":[],"x":690,"y":600,"wires":[["aba9b26a.e7644"]]},{"id":"4f7dc5ee.c5f76c","type":"function","z":"867fb348.0b131","name":"GASNIVELDIGITAL","func":"msg.payload = msg.payload.GASNIVELDIGITAL;\nreturn msg;","outputs":1,"noerr":0,"initialize":"","finalize":"","libs":[],"x":740,"y":680,"wires":[["774d6b37.960c34"]]},{"id":"aba9b26a.e7644","type":"ui_text_input","z":"867fb348.0b131","name":"","label":"Temperatura:","tooltip":"","group":"a2ad8098.19351","order":0,"width":0,"height":0,"passthru":true,"mode":"text","delay":300,"topic":"topic","sendOnBlur":true,"topicType":"msg","x":930,"y":600,"wires":[[]]},{"id":"99d76703.656638","type":"ui_text_input","z":"867fb348.0b131","name":"","label":"Humedad:","tooltip":"","group":"a2ad8098.19351","order":0,"width":0,"height":0,"passthru":true,"mode":"text","delay":300,"topic":"topic","sendOnBlur":true,"topicType":"msg","x":930,"y":560,"wires":[[]]},{"id":"566287c3.a5ceb8","type":"function","z":"867fb348.0b131","name":"insertar_humedad","func":"var tzoffset = (new Date()).getTimezoneOffset()*60000;\nfechahora= (new Date (Date.now() - tzoffset)).toISOString().slice(0,-1);\nmsg.topic = \"insert into humedad values ('\"+fechahora+\"',\"+msg.payload.HUMEDAD+\")\";\nreturn msg;","outputs":1,"noerr":0,"initialize":"","finalize":"","libs":[],"x":470,"y":920,"wires":[["c2abb8f6.3acf2"]]},{"id":"527a098d.cccdd8","type":"function","z":"867fb348.0b131","name":"insertar_temperatura","func":"var tzoffset = (new Date()).getTimezoneOffset()*60000;\nfechahora= (new Date (Date.now() - tzoffset)).toISOString().slice(0,-1);\nmsg.topic = \"insert into temperatura values ('\"+fechahora+\"',\"+msg.payload.TEMPERATURA+\")\";\nreturn msg;","outputs":1,"noerr":0,"initialize":"","finalize":"","libs":[],"x":480,"y":960,"wires":[["c2abb8f6.3acf2"]]},{"id":"e8e690f1.a1a31","type":"switch","z":"867fb348.0b131","name":"sismo?","property":"payload","propertyType":"msg","rules":[{"t":"eq","v":"1","vt":"num"}],"checkall":"true","repair":false,"outputs":1,"x":940,"y":720,"wires":[["6588b282.d4be9c"]]},{"id":"2cc8cf70.b5e9c","type":"ui_switch","z":"867fb348.0b131","name":"","label":"Control de Gas","tooltip":"","group":"e6d23854.a005","order":0,"width":0,"height":0,"passthru":true,"decouple":"false","topic":"topic","topicType":"msg","style":"","onvalue":"true","onvalueType":"bool","onicon":"","oncolor":"","offvalue":"false","offvalueType":"bool","officon":"","offcolor":"","animate":false,"className":"","x":1240,"y":660,"wires":[["2fc80ef7.9c1c22"]]},{"id":"6588b282.d4be9c","type":"function","z":"867fb348.0b131","name":"vibracion","func":"msg.payload = false;\nreturn msg;","outputs":1,"noerr":0,"initialize":"","finalize":"","libs":[],"x":1080,"y":720,"wires":[["2cc8cf70.b5e9c","5922c5e0.c2aa7c"]]},{"id":"774d6b37.960c34","type":"switch","z":"867fb348.0b131","name":"gas?","property":"payload","propertyType":"msg","rules":[{"t":"eq","v":"1","vt":"str"}],"checkall":"true","repair":false,"outputs":1,"x":930,"y":680,"wires":[["422ad251.0740bc"]]},{"id":"422ad251.0740bc","type":"function","z":"867fb348.0b131","name":"gas","func":"msg.payload = false;\nreturn msg;","outputs":1,"noerr":0,"initialize":"","finalize":"","libs":[],"x":1070,"y":680,"wires":[["2cc8cf70.b5e9c"]]},{"id":"5922c5e0.c2aa7c","type":"ui_switch","z":"867fb348.0b131","name":"","label":"Control de Agua","tooltip":"","group":"e6d23854.a005","order":0,"width":0,"height":0,"passthru":true,"decouple":"false","topic":"topic","topicType":"msg","style":"","onvalue":"true","onvalueType":"bool","onicon":"","oncolor":"","offvalue":"false","offvalueType":"bool","officon":"","offcolor":"","animate":false,"className":"","x":1240,"y":740,"wires":[["69a6d574.e52d0c"]]},{"id":"69a6d574.e52d0c","type":"mqtt out","z":"867fb348.0b131","name":"","topic":"capstone/actuador_agua","qos":"2","retain":"","respTopic":"","contentType":"","userProps":"","correl":"","expiry":"","broker":"eca8609b.847308","x":1330,"y":800,"wires":[]},{"id":"eca8609b.847308","type":"mqtt-broker","name":"raspberry","broker":"192.168.0.102","port":"1883","clientid":"","usetls":false,"protocolVersion":"4","keepalive":"60","cleansession":true,"birthTopic":"","birthQos":"0","birthPayload":"","birthMsg":{},"closeTopic":"","closeQos":"0","closePayload":"","closeMsg":{},"willTopic":"","willQos":"0","willPayload":"","willMsg":{},"sessionExpiry":""},{"id":"26b2b983.ab974e","type":"ui_group","name":"Aceleración","tab":"c56a2a36.a49748","order":1,"disp":true,"width":"6","collapse":false,"className":""},{"id":"e65fd366.925cb8","type":"ui_group","name":"Velocidad Angular","tab":"c56a2a36.a49748","order":3,"disp":true,"width":"6","collapse":false,"className":""},{"id":"f8656455.7e0d2","type":"MySQLdatabase","name":"","host":"127.0.0.1","port":"3306","db":"proyecto_capstone","tz":"","charset":"UTF8"},{"id":"556cdb95.7b9ba4","type":"ui_group","name":"Rotación","tab":"c56a2a36.a49748","order":5,"disp":true,"width":"6","collapse":false,"className":""},{"id":"d0ae1a0e.fec798","type":"ui_group","name":"Inclinación","tab":"c56a2a36.a49748","order":6,"disp":true,"width":"6","collapse":false,"className":""},{"id":"aba49caa.e7008","type":"mqtt-broker","name":"GENARO","broker":"35.157.158.119","port":"1883","clientid":"","usetls":false,"protocolVersion":"4","keepalive":"60","cleansession":true,"birthTopic":"","birthQos":"0","birthPayload":"","birthMsg":{},"closeTopic":"","closeQos":"0","closePayload":"","closeMsg":{},"willTopic":"","willQos":"0","willPayload":"","willMsg":{},"sessionExpiry":""},{"id":"a2ad8098.19351","type":"ui_group","name":"Temperatura y Humedad","tab":"c56a2a36.a49748","order":7,"disp":true,"width":"6","collapse":false,"className":""},{"id":"e6d23854.a005","type":"ui_group","name":"Encendedor","tab":"c56a2a36.a49748","order":2,"disp":true,"width":"6","collapse":false,"className":""},{"id":"c56a2a36.a49748","type":"ui_tab","name":"Control Nodos","icon":"dashboard","order":1,"disabled":false,"hidden":false}]
+[
+    {
+        "id": "867fb348.0b131",
+        "type": "tab",
+        "label": "Proyecto Capstone",
+        "disabled": false,
+        "info": ""
+    },
+    {
+        "id": "f7471286.7b276",
+        "type": "mqtt in",
+        "z": "867fb348.0b131",
+        "name": "",
+        "topic": "capstone/nodo_mpu6050",
+        "qos": "2",
+        "datatype": "auto",
+        "broker": "eca8609b.847308",
+        "nl": false,
+        "rap": true,
+        "rh": 0,
+        "x": 190,
+        "y": 100,
+        "wires": [
+            [
+                "75691e2.5e5d86"
+            ]
+        ]
+    },
+    {
+        "id": "75691e2.5e5d86",
+        "type": "json",
+        "z": "867fb348.0b131",
+        "name": "",
+        "property": "payload",
+        "action": "obj",
+        "pretty": false,
+        "x": 370,
+        "y": 100,
+        "wires": [
+            [
+                "e84313a3.b650e",
+                "5c4fa3a5.2160cc",
+                "a56a8def.c30b58",
+                "4698168e.7e2a5",
+                "2e22545b.e390e4",
+                "caede563.a9f1d",
+                "4cf7b5d8.681154",
+                "39bd94a1.dbd10c",
+                "537d2d45.b73764",
+                "a3e0e41b.4e7988",
+                "cceab31.c36c35",
+                "a956084b.412048",
+                "3699fe95.bd9ff2",
+                "48672e45.efc84",
+                "50dde507.135d2c"
+            ]
+        ]
+    },
+    {
+        "id": "e84313a3.b650e",
+        "type": "function",
+        "z": "867fb348.0b131",
+        "name": "aceleracion_x",
+        "func": "msg.payload = msg.payload.ax;\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 680,
+        "y": 100,
+        "wires": [
+            [
+                "4175a36f.a55c44"
+            ]
+        ]
+    },
+    {
+        "id": "5c4fa3a5.2160cc",
+        "type": "function",
+        "z": "867fb348.0b131",
+        "name": "aceleracion_z",
+        "func": "msg.payload = msg.payload.az;\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 680,
+        "y": 180,
+        "wires": [
+            [
+                "d66f77e8.cd445"
+            ]
+        ]
+    },
+    {
+        "id": "a56a8def.c30b58",
+        "type": "function",
+        "z": "867fb348.0b131",
+        "name": "aceleracion_y",
+        "func": "msg.payload = msg.payload.ay;\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 680,
+        "y": 140,
+        "wires": [
+            [
+                "8e46cfae.ac0e48"
+            ]
+        ]
+    },
+    {
+        "id": "2fc80ef7.9c1c22",
+        "type": "mqtt out",
+        "z": "867fb348.0b131",
+        "name": "",
+        "topic": "capstone/actuador_gas",
+        "qos": "2",
+        "retain": "",
+        "respTopic": "",
+        "contentType": "",
+        "userProps": "",
+        "correl": "",
+        "expiry": "",
+        "broker": "eca8609b.847308",
+        "x": 1330,
+        "y": 580,
+        "wires": []
+    },
+    {
+        "id": "4175a36f.a55c44",
+        "type": "ui_text_input",
+        "z": "867fb348.0b131",
+        "name": "",
+        "label": "Aceleración en x: ",
+        "tooltip": "",
+        "group": "26b2b983.ab974e",
+        "order": 0,
+        "width": 0,
+        "height": 0,
+        "passthru": true,
+        "mode": "text",
+        "delay": 300,
+        "topic": "topic",
+        "sendOnBlur": true,
+        "topicType": "msg",
+        "x": 950,
+        "y": 100,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "8e46cfae.ac0e48",
+        "type": "ui_text_input",
+        "z": "867fb348.0b131",
+        "name": "",
+        "label": "Aceleración en y: ",
+        "tooltip": "",
+        "group": "26b2b983.ab974e",
+        "order": 0,
+        "width": 0,
+        "height": 0,
+        "passthru": true,
+        "mode": "text",
+        "delay": 300,
+        "topic": "topic",
+        "sendOnBlur": true,
+        "topicType": "msg",
+        "x": 950,
+        "y": 140,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "d66f77e8.cd445",
+        "type": "ui_text_input",
+        "z": "867fb348.0b131",
+        "name": "",
+        "label": "Aceleración en z: ",
+        "tooltip": "",
+        "group": "26b2b983.ab974e",
+        "order": 0,
+        "width": 0,
+        "height": 0,
+        "passthru": true,
+        "mode": "text",
+        "delay": 300,
+        "topic": "topic",
+        "sendOnBlur": true,
+        "topicType": "msg",
+        "x": 950,
+        "y": 180,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "4698168e.7e2a5",
+        "type": "function",
+        "z": "867fb348.0b131",
+        "name": "velocidad_x",
+        "func": "msg.payload = msg.payload.gx;\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 670,
+        "y": 240,
+        "wires": [
+            [
+                "947da25c.566e3"
+            ]
+        ]
+    },
+    {
+        "id": "caede563.a9f1d",
+        "type": "function",
+        "z": "867fb348.0b131",
+        "name": "velocidad_z",
+        "func": "msg.payload = msg.payload.gz;\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 670,
+        "y": 320,
+        "wires": [
+            [
+                "eb163d21.e50bc"
+            ]
+        ]
+    },
+    {
+        "id": "2e22545b.e390e4",
+        "type": "function",
+        "z": "867fb348.0b131",
+        "name": "velocidad_y",
+        "func": "msg.payload = msg.payload.gy;\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 670,
+        "y": 280,
+        "wires": [
+            [
+                "34cd31cd.6dbf96"
+            ]
+        ]
+    },
+    {
+        "id": "947da25c.566e3",
+        "type": "ui_text_input",
+        "z": "867fb348.0b131",
+        "name": "",
+        "label": "Velocidad angular x: ",
+        "tooltip": "",
+        "group": "e65fd366.925cb8",
+        "order": 0,
+        "width": 0,
+        "height": 0,
+        "passthru": true,
+        "mode": "text",
+        "delay": 300,
+        "topic": "topic",
+        "sendOnBlur": true,
+        "topicType": "msg",
+        "x": 960,
+        "y": 240,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "34cd31cd.6dbf96",
+        "type": "ui_text_input",
+        "z": "867fb348.0b131",
+        "name": "",
+        "label": "Velocidad angular y: ",
+        "tooltip": "",
+        "group": "e65fd366.925cb8",
+        "order": 0,
+        "width": 0,
+        "height": 0,
+        "passthru": true,
+        "mode": "text",
+        "delay": 300,
+        "topic": "topic",
+        "sendOnBlur": true,
+        "topicType": "msg",
+        "x": 960,
+        "y": 280,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "eb163d21.e50bc",
+        "type": "ui_text_input",
+        "z": "867fb348.0b131",
+        "name": "",
+        "label": "Velocidad angular en z: ",
+        "tooltip": "",
+        "group": "e65fd366.925cb8",
+        "order": 0,
+        "width": 0,
+        "height": 0,
+        "passthru": true,
+        "mode": "text",
+        "delay": 300,
+        "topic": "topic",
+        "sendOnBlur": true,
+        "topicType": "msg",
+        "x": 970,
+        "y": 320,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "4cf7b5d8.681154",
+        "type": "function",
+        "z": "867fb348.0b131",
+        "name": "vibracion",
+        "func": "msg.payload = msg.payload.vibra;\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 700,
+        "y": 720,
+        "wires": [
+            [
+                "e8e690f1.a1a31"
+            ]
+        ]
+    },
+    {
+        "id": "c2abb8f6.3acf2",
+        "type": "mysql",
+        "z": "867fb348.0b131",
+        "mydb": "f8656455.7e0d2",
+        "name": "DB",
+        "x": 710,
+        "y": 840,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "39bd94a1.dbd10c",
+        "type": "function",
+        "z": "867fb348.0b131",
+        "name": "insertar_aceleracion",
+        "func": "var tzoffset = (new Date()).getTimezoneOffset()*60000;\nfechahora= (new Date (Date.now() - tzoffset)).toISOString().slice(0,-1);\nmsg.topic = \"insert into aceleracion values ('\"+fechahora+\"',\"+msg.payload.ax+\",\"+msg.payload.ay+\",\"+msg.payload.az+\")\";\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 480,
+        "y": 740,
+        "wires": [
+            [
+                "c2abb8f6.3acf2"
+            ]
+        ]
+    },
+    {
+        "id": "537d2d45.b73764",
+        "type": "function",
+        "z": "867fb348.0b131",
+        "name": "rotacion_x",
+        "func": "msg.payload = msg.payload.rx;\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 670,
+        "y": 380,
+        "wires": [
+            [
+                "b9e527cc.0f0078"
+            ]
+        ]
+    },
+    {
+        "id": "b9e527cc.0f0078",
+        "type": "ui_text_input",
+        "z": "867fb348.0b131",
+        "name": "",
+        "label": "Rotación en x: ",
+        "tooltip": "",
+        "group": "556cdb95.7b9ba4",
+        "order": 0,
+        "width": 0,
+        "height": 0,
+        "passthru": true,
+        "mode": "text",
+        "delay": 300,
+        "topic": "topic",
+        "sendOnBlur": true,
+        "topicType": "msg",
+        "x": 940,
+        "y": 380,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "a3e0e41b.4e7988",
+        "type": "function",
+        "z": "867fb348.0b131",
+        "name": "rotacion_y",
+        "func": "msg.payload = msg.payload.ry;\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 670,
+        "y": 420,
+        "wires": [
+            [
+                "a93b0fae.62e5d"
+            ]
+        ]
+    },
+    {
+        "id": "a93b0fae.62e5d",
+        "type": "ui_text_input",
+        "z": "867fb348.0b131",
+        "name": "",
+        "label": "Rotación en y: ",
+        "tooltip": "",
+        "group": "556cdb95.7b9ba4",
+        "order": 0,
+        "width": 0,
+        "height": 0,
+        "passthru": true,
+        "mode": "text",
+        "delay": 300,
+        "topic": "topic",
+        "sendOnBlur": true,
+        "topicType": "msg",
+        "x": 940,
+        "y": 420,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "cceab31.c36c35",
+        "type": "function",
+        "z": "867fb348.0b131",
+        "name": "inclinacion_x",
+        "func": "msg.payload = msg.payload.ix;\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 670,
+        "y": 480,
+        "wires": [
+            [
+                "80edde61.981d3"
+            ]
+        ]
+    },
+    {
+        "id": "80edde61.981d3",
+        "type": "ui_text_input",
+        "z": "867fb348.0b131",
+        "name": "",
+        "label": "Inclinación en x: ",
+        "tooltip": "",
+        "group": "d0ae1a0e.fec798",
+        "order": 0,
+        "width": 0,
+        "height": 0,
+        "passthru": true,
+        "mode": "text",
+        "delay": 300,
+        "topic": "topic",
+        "sendOnBlur": true,
+        "topicType": "msg",
+        "x": 940,
+        "y": 480,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "a956084b.412048",
+        "type": "function",
+        "z": "867fb348.0b131",
+        "name": "inclinacion_y",
+        "func": "msg.payload = msg.payload.iy;\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 670,
+        "y": 520,
+        "wires": [
+            [
+                "19014a62.5c1026"
+            ]
+        ]
+    },
+    {
+        "id": "19014a62.5c1026",
+        "type": "ui_text_input",
+        "z": "867fb348.0b131",
+        "name": "",
+        "label": "Inclinación en y: ",
+        "tooltip": "",
+        "group": "d0ae1a0e.fec798",
+        "order": 0,
+        "width": 0,
+        "height": 0,
+        "passthru": true,
+        "mode": "text",
+        "delay": 300,
+        "topic": "topic",
+        "sendOnBlur": true,
+        "topicType": "msg",
+        "x": 940,
+        "y": 520,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "3699fe95.bd9ff2",
+        "type": "function",
+        "z": "867fb348.0b131",
+        "name": "insertar_velocidad",
+        "func": "var tzoffset = (new Date()).getTimezoneOffset()*60000;\nfechahora= (new Date (Date.now() - tzoffset)).toISOString().slice(0,-1);\nmsg.topic = \"insert into velocidad values ('\"+fechahora+\"',\"+msg.payload.gx+\",\"+msg.payload.gy+\",\"+msg.payload.gz+\")\";\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 470,
+        "y": 780,
+        "wires": [
+            [
+                "c2abb8f6.3acf2"
+            ]
+        ]
+    },
+    {
+        "id": "48672e45.efc84",
+        "type": "function",
+        "z": "867fb348.0b131",
+        "name": "insertar_rotacion",
+        "func": "var tzoffset = (new Date()).getTimezoneOffset()*60000;\nfechahora= (new Date (Date.now() - tzoffset)).toISOString().slice(0,-1);\nmsg.topic = \"insert into rotacion values ('\"+fechahora+\"',\"+msg.payload.rx+\",\"+msg.payload.ry+\")\";\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 470,
+        "y": 820,
+        "wires": [
+            [
+                "c2abb8f6.3acf2"
+            ]
+        ]
+    },
+    {
+        "id": "50dde507.135d2c",
+        "type": "function",
+        "z": "867fb348.0b131",
+        "name": "insertar_inclinacion",
+        "func": "var tzoffset = (new Date()).getTimezoneOffset()*60000;\nfechahora= (new Date (Date.now() - tzoffset)).toISOString().slice(0,-1);\nmsg.topic = \"insert into inclinacion values ('\"+fechahora+\"',\"+msg.payload.ix+\",\"+msg.payload.iy+\")\";\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 470,
+        "y": 860,
+        "wires": [
+            [
+                "c2abb8f6.3acf2"
+            ]
+        ]
+    },
+    {
+        "id": "a38db945.622748",
+        "type": "mqtt in",
+        "z": "867fb348.0b131",
+        "name": "",
+        "topic": "capstone/gas_temperatura_humedad_gas",
+        "qos": "2",
+        "datatype": "auto",
+        "broker": "aba49caa.e7008",
+        "nl": false,
+        "rap": true,
+        "rh": 0,
+        "x": 240,
+        "y": 160,
+        "wires": [
+            [
+                "1f5e2125.03338f"
+            ]
+        ]
+    },
+    {
+        "id": "1f5e2125.03338f",
+        "type": "json",
+        "z": "867fb348.0b131",
+        "name": "",
+        "property": "payload",
+        "action": "obj",
+        "pretty": false,
+        "x": 350,
+        "y": 240,
+        "wires": [
+            [
+                "db000374.d4ef8",
+                "8fa4905f.08c3a",
+                "4f7dc5ee.c5f76c",
+                "566287c3.a5ceb8",
+                "527a098d.cccdd8"
+            ]
+        ]
+    },
+    {
+        "id": "db000374.d4ef8",
+        "type": "function",
+        "z": "867fb348.0b131",
+        "name": "HUMEDAD",
+        "func": "msg.payload = msg.payload.HUMEDAD;\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 670,
+        "y": 560,
+        "wires": [
+            [
+                "99d76703.656638"
+            ]
+        ]
+    },
+    {
+        "id": "8fa4905f.08c3a",
+        "type": "function",
+        "z": "867fb348.0b131",
+        "name": "TEMPERATURA",
+        "func": "msg.payload = msg.payload.TEMPERATURA;\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 690,
+        "y": 600,
+        "wires": [
+            [
+                "aba9b26a.e7644"
+            ]
+        ]
+    },
+    {
+        "id": "4f7dc5ee.c5f76c",
+        "type": "function",
+        "z": "867fb348.0b131",
+        "name": "GASNIVELDIGITAL",
+        "func": "msg.payload = msg.payload.GASNIVELDIGITAL;\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 740,
+        "y": 680,
+        "wires": [
+            [
+                "774d6b37.960c34"
+            ]
+        ]
+    },
+    {
+        "id": "aba9b26a.e7644",
+        "type": "ui_text_input",
+        "z": "867fb348.0b131",
+        "name": "",
+        "label": "Temperatura:",
+        "tooltip": "",
+        "group": "a2ad8098.19351",
+        "order": 0,
+        "width": 0,
+        "height": 0,
+        "passthru": true,
+        "mode": "text",
+        "delay": 300,
+        "topic": "topic",
+        "sendOnBlur": true,
+        "topicType": "msg",
+        "x": 930,
+        "y": 600,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "99d76703.656638",
+        "type": "ui_text_input",
+        "z": "867fb348.0b131",
+        "name": "",
+        "label": "Humedad:",
+        "tooltip": "",
+        "group": "a2ad8098.19351",
+        "order": 0,
+        "width": 0,
+        "height": 0,
+        "passthru": true,
+        "mode": "text",
+        "delay": 300,
+        "topic": "topic",
+        "sendOnBlur": true,
+        "topicType": "msg",
+        "x": 930,
+        "y": 560,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "566287c3.a5ceb8",
+        "type": "function",
+        "z": "867fb348.0b131",
+        "name": "insertar_humedad",
+        "func": "var tzoffset = (new Date()).getTimezoneOffset()*60000;\nfechahora= (new Date (Date.now() - tzoffset)).toISOString().slice(0,-1);\nmsg.topic = \"insert into humedad values ('\"+fechahora+\"',\"+msg.payload.HUMEDAD+\")\";\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 470,
+        "y": 920,
+        "wires": [
+            [
+                "c2abb8f6.3acf2"
+            ]
+        ]
+    },
+    {
+        "id": "527a098d.cccdd8",
+        "type": "function",
+        "z": "867fb348.0b131",
+        "name": "insertar_temperatura",
+        "func": "var tzoffset = (new Date()).getTimezoneOffset()*60000;\nfechahora= (new Date (Date.now() - tzoffset)).toISOString().slice(0,-1);\nmsg.topic = \"insert into temperatura values ('\"+fechahora+\"',\"+msg.payload.TEMPERATURA+\")\";\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 480,
+        "y": 960,
+        "wires": [
+            [
+                "c2abb8f6.3acf2"
+            ]
+        ]
+    },
+    {
+        "id": "e8e690f1.a1a31",
+        "type": "switch",
+        "z": "867fb348.0b131",
+        "name": "sismo?",
+        "property": "payload",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "eq",
+                "v": "1",
+                "vt": "num"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 1,
+        "x": 940,
+        "y": 720,
+        "wires": [
+            [
+                "6588b282.d4be9c"
+            ]
+        ]
+    },
+    {
+        "id": "2cc8cf70.b5e9c",
+        "type": "ui_switch",
+        "z": "867fb348.0b131",
+        "name": "",
+        "label": "Control de Gas",
+        "tooltip": "",
+        "group": "e6d23854.a005",
+        "order": 0,
+        "width": 0,
+        "height": 0,
+        "passthru": true,
+        "decouple": "false",
+        "topic": "topic",
+        "topicType": "msg",
+        "style": "",
+        "onvalue": "true",
+        "onvalueType": "bool",
+        "onicon": "",
+        "oncolor": "",
+        "offvalue": "false",
+        "offvalueType": "bool",
+        "officon": "",
+        "offcolor": "",
+        "animate": false,
+        "className": "",
+        "x": 1240,
+        "y": 660,
+        "wires": [
+            [
+                "2fc80ef7.9c1c22"
+            ]
+        ]
+    },
+    {
+        "id": "6588b282.d4be9c",
+        "type": "function",
+        "z": "867fb348.0b131",
+        "name": "vibracion",
+        "func": "msg.payload = false;\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1080,
+        "y": 720,
+        "wires": [
+            [
+                "2cc8cf70.b5e9c",
+                "5922c5e0.c2aa7c"
+            ]
+        ]
+    },
+    {
+        "id": "774d6b37.960c34",
+        "type": "switch",
+        "z": "867fb348.0b131",
+        "name": "gas?",
+        "property": "payload",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "eq",
+                "v": "1",
+                "vt": "str"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 1,
+        "x": 930,
+        "y": 680,
+        "wires": [
+            [
+                "422ad251.0740bc"
+            ]
+        ]
+    },
+    {
+        "id": "422ad251.0740bc",
+        "type": "function",
+        "z": "867fb348.0b131",
+        "name": "gas",
+        "func": "msg.payload = false;\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1070,
+        "y": 680,
+        "wires": [
+            [
+                "2cc8cf70.b5e9c"
+            ]
+        ]
+    },
+    {
+        "id": "5922c5e0.c2aa7c",
+        "type": "ui_switch",
+        "z": "867fb348.0b131",
+        "name": "",
+        "label": "Control de Agua",
+        "tooltip": "",
+        "group": "e6d23854.a005",
+        "order": 0,
+        "width": 0,
+        "height": 0,
+        "passthru": true,
+        "decouple": "false",
+        "topic": "topic",
+        "topicType": "msg",
+        "style": "",
+        "onvalue": "true",
+        "onvalueType": "bool",
+        "onicon": "",
+        "oncolor": "",
+        "offvalue": "false",
+        "offvalueType": "bool",
+        "officon": "",
+        "offcolor": "",
+        "animate": false,
+        "className": "",
+        "x": 1240,
+        "y": 740,
+        "wires": [
+            [
+                "69a6d574.e52d0c"
+            ]
+        ]
+    },
+    {
+        "id": "69a6d574.e52d0c",
+        "type": "mqtt out",
+        "z": "867fb348.0b131",
+        "name": "",
+        "topic": "capstone/actuador_agua",
+        "qos": "2",
+        "retain": "",
+        "respTopic": "",
+        "contentType": "",
+        "userProps": "",
+        "correl": "",
+        "expiry": "",
+        "broker": "eca8609b.847308",
+        "x": 1330,
+        "y": 800,
+        "wires": []
+    },
+    {
+        "id": "eca8609b.847308",
+        "type": "mqtt-broker",
+        "name": "raspberry",
+        "broker": "192.168.0.102",
+        "port": "1883",
+        "clientid": "",
+        "usetls": false,
+        "protocolVersion": "4",
+        "keepalive": "60",
+        "cleansession": true,
+        "birthTopic": "",
+        "birthQos": "0",
+        "birthPayload": "",
+        "birthMsg": {},
+        "closeTopic": "",
+        "closeQos": "0",
+        "closePayload": "",
+        "closeMsg": {},
+        "willTopic": "",
+        "willQos": "0",
+        "willPayload": "",
+        "willMsg": {},
+        "sessionExpiry": ""
+    },
+    {
+        "id": "26b2b983.ab974e",
+        "type": "ui_group",
+        "name": "Aceleración",
+        "tab": "c56a2a36.a49748",
+        "order": 1,
+        "disp": true,
+        "width": "6",
+        "collapse": false,
+        "className": ""
+    },
+    {
+        "id": "e65fd366.925cb8",
+        "type": "ui_group",
+        "name": "Velocidad Angular",
+        "tab": "c56a2a36.a49748",
+        "order": 3,
+        "disp": true,
+        "width": "6",
+        "collapse": false,
+        "className": ""
+    },
+    {
+        "id": "f8656455.7e0d2",
+        "type": "MySQLdatabase",
+        "name": "",
+        "host": "127.0.0.1",
+        "port": "3306",
+        "db": "proyecto_capstone",
+        "tz": "",
+        "charset": "UTF8"
+    },
+    {
+        "id": "556cdb95.7b9ba4",
+        "type": "ui_group",
+        "name": "Rotación",
+        "tab": "c56a2a36.a49748",
+        "order": 5,
+        "disp": true,
+        "width": "6",
+        "collapse": false,
+        "className": ""
+    },
+    {
+        "id": "d0ae1a0e.fec798",
+        "type": "ui_group",
+        "name": "Inclinación",
+        "tab": "c56a2a36.a49748",
+        "order": 6,
+        "disp": true,
+        "width": "6",
+        "collapse": false,
+        "className": ""
+    },
+    {
+        "id": "aba49caa.e7008",
+        "type": "mqtt-broker",
+        "name": "GENARO",
+        "broker": "35.157.158.119",
+        "port": "1883",
+        "clientid": "",
+        "usetls": false,
+        "protocolVersion": "4",
+        "keepalive": "60",
+        "cleansession": true,
+        "birthTopic": "",
+        "birthQos": "0",
+        "birthPayload": "",
+        "birthMsg": {},
+        "closeTopic": "",
+        "closeQos": "0",
+        "closePayload": "",
+        "closeMsg": {},
+        "willTopic": "",
+        "willQos": "0",
+        "willPayload": "",
+        "willMsg": {},
+        "sessionExpiry": ""
+    },
+    {
+        "id": "a2ad8098.19351",
+        "type": "ui_group",
+        "name": "Temperatura y Humedad",
+        "tab": "c56a2a36.a49748",
+        "order": 7,
+        "disp": true,
+        "width": "6",
+        "collapse": false,
+        "className": ""
+    },
+    {
+        "id": "e6d23854.a005",
+        "type": "ui_group",
+        "name": "Encendedor",
+        "tab": "c56a2a36.a49748",
+        "order": 2,
+        "disp": true,
+        "width": "6",
+        "collapse": false,
+        "className": ""
+    },
+    {
+        "id": "c56a2a36.a49748",
+        "type": "ui_tab",
+        "name": "Control Nodos",
+        "icon": "dashboard",
+        "order": 1,
+        "disabled": false,
+        "hidden": false
+    }
+]
