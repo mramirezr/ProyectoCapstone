@@ -1,0 +1,15 @@
+La labor del Nodo de Control es recopilar la información generada por los Nodos 1, 2 y 3, almacenarla para su análisis posterior 
+y la toma de decisiones del sistema en general.
+Este proceso se lleva a cabo utilizando la Raspeberry Pi 4 como servidor de Node-Red, Broker de MQTT y servidor de Base de Datos. 
+La Raspberry Pi 4 se encuentra conectada dentro de una red de infraestructura donde comparte información con los Nodos 1, 2 y 3, esta 
+información es pasada a través de mensajes utilizando el protocolo MQTT (por sus siglas en inglés Message Queue Telemetry Transport).
+Estos mensajes son recopilados desde el Broker utilizando Node-Red leyendo la información que producen los nodos en sus respectivos tópicos.
+Esta información (como se puede apreciar en la descripción de los nodos) es transmitida en forma de JSON, por lo cual es posible realizar un “parser” 
+que permite convertirlos en texto plano y desplegarlos en la interfaz gráfica.
+
+La información recopilada  es almacenada en una base de datos. 
+
+Al mismo tiempo, dentro de los JSON se verifica la información de los niveles de gas y de vibración, de esta manera en caso de que exista alguna fuga
+o se esté produciendo un evento sísmico, los actuadores que controlan las llaves de paso de agua y de gas se cierren de manera automática. 
+Para esto, se implementó una etapa lógica que permite verificar la información proveniente de los nodos para generar mensajes que les indiquen a los 
+actuadores que realicen la función de apertura o de cerrado.
