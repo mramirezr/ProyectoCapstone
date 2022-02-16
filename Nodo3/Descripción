@@ -1,0 +1,20 @@
+Este programa lee temperatura y humedad utilizando el sensor DHT11, también detecta la presencia
+// o ausencia de gas LP utilizando el sensor MQ6 y activa o desactiva dos seromotores micro (SG90).
+// Los servomotores permiten abrir o cerrar las válvulas de gas y agua, respectivamente.
+// Los datos de temperatura, humedad, presencia de gas y los estados de los dos servomotores se 
+// publican en un broker público con el tema "capstone/humedad_temperatura_gas_servogas_servoagua".
+// La terminal de salida (S) del sensor DHT11 se conecta al GPIO 14 de la ESP32CAM, la terminal de 
+// salida digital (DO) del sensor MQ6 se conecta al GPIO 13. La terminal de control del servomotor 
+// de gas (agua) se conecta al GPIO 12 (GPIO 15).
+// Los sensores DHT11, MQ6, la ESP32CAM y los servomotores se alimentan con una fuente de 5 volts.
+
+// IMPORTANTE: Al cargar el programa a la ES32CAM, la terminal de salida (SIGNAL)
+// del sensor DHT11 no debe estar conectado al ESP32CAM (DHTPIN). No olvide conectarlo
+// después de cargar el programa a la ESP32CAM.
+
+// La válvula de gas se cierra si se detecta presencia de gas LP, si la temperatura es mayor a un
+// cierto umbral (por ejemplo, 50°C). La válbula de agua se cierra si se detecta un nivel de humedad 
+// mayor a un cierto umbral (por ejemplo, 90%). Las vávulas de gas y agua también se pueden controlar
+// de forma remota. Para esto, el sistema se subscribe a un agente (broker) público en los temas 
+// "capstone/actuador_gas" y "capstone/actuador_agua". Si se recibe el mensaje "true" la válvula se
+// abre, si se recibe el mensaje "false", la válvula se cierra.
